@@ -42,16 +42,28 @@ from m5.params import *
 
 from m5.objects.FuncUnit import *
 
+# AES-128
+AES128 = 40
+
+# Simon-128/128
+SIMON128128 = 20
+
+# Qarma11-128-o1
+QARMA11 = 12
+
+# IMPORTANT: Always toggle this variable and this variable only
+ENCRYPTION_LATENCY = AES128
 
 class IntALU(FUDesc):
-    opList = [OpDesc(opClass="IntAlu")]
+    # Encryption + 1 (ALU) + Decryption
+    opList = [OpDesc(opClass="IntAlu", opLat=ENCRYPTION_LATENCY*2+1)]
     count = 6
 
 
 class IntMultDiv(FUDesc):
     opList = [
-        OpDesc(opClass="IntMult", opLat=3),
-        OpDesc(opClass="IntDiv", opLat=20, pipelined=False),
+        OpDesc(opClass="IntMult", opLat=ENCRYPTION_LATENCY*2+3),
+        OpDesc(opClass="IntDiv", opLat=ENCRYPTION_LATENCY*2+20, pipelined=False),
     ]
 
     count = 2
@@ -59,20 +71,22 @@ class IntMultDiv(FUDesc):
 
 class FP_ALU(FUDesc):
     opList = [
-        OpDesc(opClass="FloatAdd", opLat=2),
-        OpDesc(opClass="FloatCmp", opLat=2),
-        OpDesc(opClass="FloatCvt", opLat=2),
+        # TODO: On the vanilla branch, change latencies to 3?
+        OpDesc(opClass="FloatAdd", opLat=ENCRYPTION_LATENCY*2+3),
+        OpDesc(opClass="FloatCmp", opLat=ENCRYPTION_LATENCY*2+3),
+        OpDesc(opClass="FloatCvt", opLat=ENCRYPTION_LATENCY*2+3),
     ]
     count = 4
 
 
 class FP_MultDiv(FUDesc):
     opList = [
-        OpDesc(opClass="FloatMult", opLat=4),
-        OpDesc(opClass="FloatMultAcc", opLat=5),
-        OpDesc(opClass="FloatMisc", opLat=3),
-        OpDesc(opClass="FloatDiv", opLat=12, pipelined=False),
-        OpDesc(opClass="FloatSqrt", opLat=24, pipelined=False),
+        # TODO: Verify original latencies
+        OpDesc(opClass="FloatMult", opLat=ENCRYPTION_LATENCY*2+4),
+        OpDesc(opClass="FloatMultAcc", opLat=ENCRYPTION_LATENCY*2+5),
+        OpDesc(opClass="FloatMisc", opLat=ENCRYPTION_LATENCY*2+3),
+        OpDesc(opClass="FloatDiv", opLat=ENCRYPTION_LATENCY*2+12, pipelined=False),
+        OpDesc(opClass="FloatSqrt", opLat=ENCRYPTION_LATENCY*2+24, pipelined=False),
     ]
     count = 2
 
