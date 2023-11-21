@@ -972,10 +972,25 @@ decode QUADRANT default Unknown::unknown() {
                         0x1: sub({{
                             Rd = rvSext(Rs1_sd - Rs2_sd);
                         }});
+                        0x2: add_enc({{
+                            Rd = rvSextEnc(Rs1_sd + Rs2_sd); // todo - implement rvSextEnc
+                        }});
+                        0x3: sub_enc({{
+                            Rd = rvSextEnc(Rs1_sd - Rs2_sd); // todo - implement rvSextEnc
+                        }});
                     }
                     0x01: decode BS {
                         0x0: mul({{
                             Rd = rvSext(Rs1_sd * Rs2_sd);
+                        }}, IntMultOp);
+                        0x1: mul_enc({{
+                            Rd = rvSextEnc(Rs1_sd * Rs2_sd);  // todo - implement rvSextEnc
+                        }}, IntMultOp);
+                        0x2: encrypt({{
+                            Rd = Rs1_sd; // TODO - do something with the value
+                        }}, IntMultOp);
+                        0x3: decrypt({{
+                            Rd = Rs1_sd; // TODO - do something with the value
                         }}, IntMultOp);
                     }
                     0x08: decode BS {
