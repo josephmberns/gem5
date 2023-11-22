@@ -972,26 +972,26 @@ decode QUADRANT default Unknown::unknown() {
                         0x1: sub({{
                             Rd = rvSext(Rs1_sd - Rs2_sd);
                         }});
-                        0x2: add_enc({{
-                            Rd = rvSextEnc(Rs1_sd + Rs2_sd); // todo - implement rvSextEnc
+                        0x2: enc_add({{
+                            Rd = enc_add_fx(Rs1_sd, Rs2_sd); // todo(573) - implement enc_add_fx
                         }});
                         0x3: sub_enc({{
-                            Rd = rvSextEnc(Rs1_sd - Rs2_sd); // todo - implement rvSextEnc
+                            Rd = enc_sub_fx(Rs1_sd, Rs2_sd); // todo(573) - implement enc_sub_fx
                         }});
                     }
                     0x01: decode BS {
                         0x0: mul({{
                             Rd = rvSext(Rs1_sd * Rs2_sd);
                         }}, IntMultOp);
-                        0x1: mul_enc({{
-                            Rd = rvSextEnc(Rs1_sd * Rs2_sd);  // todo - implement rvSextEnc
-                        }}, IntMultOp);
-                        0x2: encrypt({{
-                            Rd = Rs1_sd; // TODO - do something with the value
-                        }}, IntMultOp);
-                        0x3: decrypt({{
-                            Rd = Rs1_sd; // TODO - do something with the value
-                        }}, IntMultOp);
+                        0x1: enc_mul({{
+                            Rd = enc_mul_fx(Rs1_sd, Rs2_sd);  // todo(573) - implement enc_mul_fx
+                        }});
+                        0x2: enc({{
+                            Rd = enc_fx(Rs1_sd); // todo(573) - implement enc_fx
+                        }});
+                        0x3: dec({{
+                            Rd = dec_fx(Rs1_sd); // todo(573) - implement dec_fx
+                        }});
                     }
                     0x08: decode BS {
                         0x1: decode RVTYPE {
@@ -1145,6 +1145,12 @@ decode QUADRANT default Unknown::unknown() {
                             Rd_sd = mulhsu_64(Rs1_sd, Rs2);
                         }
                     }}, IntMultOp);
+                    0x2: enc_slt({{
+                        Rd = enc_slt_fx(rvSext(Rs1_sd), rvSext(Rs2_sd)) ? 1 : 0;  // todo(573) - NEED TO CHANGE and implement enc_slt_fx
+                    }});
+                    0x3: enc_seq({{
+                        Rd = enc_seq_fx(rvSext(Rs1_sd), rvSext(Rs2_sd)) ? 1 : 0;  // todo(573) - NEED TO CHANGE and implement enc_seq_fx
+                    }});
                     0x5: clmulr({{
                         uint64_t result = 0;
                         uint64_t xlen = rvSelect(32, 64);
@@ -1267,6 +1273,9 @@ decode QUADRANT default Unknown::unknown() {
                             Rd_sd = rem<int64_t>(Rs1, Rs2);
                         }
                     }}, IntDivOp);
+                    0x2: enc_or({{
+                        Rd = enc_or_fx(Rs1, Rs2);  // TODO(573) - implement enc_or_fx
+                    }});
                     0x5: max({{
                         Rd_sd = std::max(rvSext(Rs1_sd), rvSext(Rs2_sd));
                     }});
