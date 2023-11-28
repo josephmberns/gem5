@@ -54,16 +54,47 @@ QARMA11 = 12
 # IMPORTANT: Always toggle this variable and this variable only
 ENCRYPTION_LATENCY = AES128
 
+# Default FUDesc opLat is 1 (what's used for the ALU)
+
+# === Sequestered Encryption === #
+
+class Enc(FUDesc):
+    opList = [
+        OpDesc(opClass="Enc", opLat=ENCRYPTION_LATENCY)
+        ]
+    count = 1
+
+class Dec(FUDesc):
+    opList = [
+        OpDesc(opClass="Dec", opLat=ENCRYPTION_LATENCY)
+        ]
+    count = 1
+
+class EncIntAlu(FUDesc):
+    opList = [
+        OpDesc(opClass="EncIntAlu", opLat=ENCRYPTION_LATENCY*2+3)
+        ]
+    count = 1
+
+class EncIntMult(FUDesc):
+    opList = [
+        OpDesc(opClass="EncIntMult", opLat=ENCRYPTION_LATENCY*2+5)
+        ]
+    count = 1
+
+# === Standard gem5 Units === #
+
 class IntALU(FUDesc):
-    # Encryption + 1 (ALU) + Decryption
-    opList = [OpDesc(opClass="IntAlu", opLat=ENCRYPTION_LATENCY*2+1)]
+    opList = [
+        OpDesc(opClass="IntAlu")
+        ]
     count = 6
 
 
 class IntMultDiv(FUDesc):
     opList = [
-        OpDesc(opClass="IntMult", opLat=ENCRYPTION_LATENCY*2+3),
-        OpDesc(opClass="IntDiv", opLat=ENCRYPTION_LATENCY*2+20, pipelined=False),
+        OpDesc(opClass="IntMult", opLat=3),
+        OpDesc(opClass="IntDiv", opLat=20, pipelined=False),
     ]
 
     count = 2
@@ -71,22 +102,20 @@ class IntMultDiv(FUDesc):
 
 class FP_ALU(FUDesc):
     opList = [
-        # TODO: On the vanilla branch, change latencies to 3?
-        OpDesc(opClass="FloatAdd", opLat=ENCRYPTION_LATENCY*2+3),
-        OpDesc(opClass="FloatCmp", opLat=ENCRYPTION_LATENCY*2+3),
-        OpDesc(opClass="FloatCvt", opLat=ENCRYPTION_LATENCY*2+3),
+        OpDesc(opClass="FloatAdd", opLat=2),
+        OpDesc(opClass="FloatCmp", opLat=2),
+        OpDesc(opClass="FloatCvt", opLat=2),
     ]
     count = 4
 
 
 class FP_MultDiv(FUDesc):
     opList = [
-        # TODO: Verify original latencies
-        OpDesc(opClass="FloatMult", opLat=ENCRYPTION_LATENCY*2+4),
-        OpDesc(opClass="FloatMultAcc", opLat=ENCRYPTION_LATENCY*2+5),
-        OpDesc(opClass="FloatMisc", opLat=ENCRYPTION_LATENCY*2+3),
-        OpDesc(opClass="FloatDiv", opLat=ENCRYPTION_LATENCY*2+12, pipelined=False),
-        OpDesc(opClass="FloatSqrt", opLat=ENCRYPTION_LATENCY*2+24, pipelined=False),
+        OpDesc(opClass="FloatMult", opLat=4),
+        OpDesc(opClass="FloatMultAcc", opLat=5),
+        OpDesc(opClass="FloatMisc", opLat=3),
+        OpDesc(opClass="FloatDiv", opLat=12, pipelined=False),
+        OpDesc(opClass="FloatSqrt", opLat=24, pipelined=False),
     ]
     count = 2
 
