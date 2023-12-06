@@ -43,6 +43,10 @@ from m5.params import *
 class OpClass(Enum):
     vals = [
         "No_OpClass",
+        "EncDec",
+        "EncIntAlu",
+        "EncIntMult",
+        "EncMem",
         "IntAlu",
         "IntMult",
         "IntDiv",

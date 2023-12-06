@@ -53,7 +53,7 @@ namespace gem5
 using enums::OpClass;
 using enums::No_OpClass;
 
-static const OpClass EncOp = enums::Enc;
+static const OpClass EncDecOp = enums::EncDec;
 static const OpClass EncIntAluOp = enums::EncIntAlu;
 static const OpClass EncIntMultOp = enums::EncIntMult;
 static const OpClass EncMemOp = enums::EncMem;

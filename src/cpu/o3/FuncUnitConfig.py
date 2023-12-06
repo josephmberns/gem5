@@ -60,15 +60,9 @@ ENCRYPTION_LATENCY = AES128
 
 # EECS 573
 
-class Enc(FUDesc):
+class EncDec(FUDesc):
     opList = [
-        OpDesc(opClass="Enc", opLat=ENCRYPTION_LATENCY)
-        ]
-    count = 1
-
-class Dec(FUDesc):
-    opList = [
-        OpDesc(opClass="Dec", opLat=ENCRYPTION_LATENCY)
+        OpDesc(opClass="EncDec", opLat=ENCRYPTION_LATENCY)
         ]
     count = 1
 
