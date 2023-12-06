@@ -154,11 +154,11 @@ class PredALU(FUDesc):
     opList = [OpDesc(opClass="SimdPredAlu")]
     count = 1
 
-class EncRdWrPort(FUDesc):  # EECS 573
-    opList = [
-        OpDesc(opClass="EncMem", opLat=ENCRYPTION_LATENCY*2+1)
-        ]
-    count = 1
+# class EncRdWrPort(FUDesc):  # EECS 573
+#     opList = [
+#         OpDesc(opClass="EncMem", opLat=ENCRYPTION_LATENCY*2+1)
+#         ]
+#     count = 1
 
 class ReadPort(FUDesc):
     opList = [OpDesc(opClass="MemRead"), OpDesc(opClass="FloatMemRead")]
