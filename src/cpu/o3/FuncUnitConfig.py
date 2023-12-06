@@ -58,6 +58,8 @@ ENCRYPTION_LATENCY = AES128
 
 # === Sequestered Encryption === #
 
+# EECS 573
+
 class Enc(FUDesc):
     opList = [
         OpDesc(opClass="Enc", opLat=ENCRYPTION_LATENCY)
@@ -158,6 +160,11 @@ class PredALU(FUDesc):
     opList = [OpDesc(opClass="SimdPredAlu")]
     count = 1
 
+class EncRdWrPort(FUDesc):  # EECS 573
+    opList = [
+        OpDesc(opClass="EncMem", opLat=ENCRYPTION_LATENCY*2+1)
+        ]
+    count = 1
 
 class ReadPort(FUDesc):
     opList = [OpDesc(opClass="MemRead"), OpDesc(opClass="FloatMemRead")]

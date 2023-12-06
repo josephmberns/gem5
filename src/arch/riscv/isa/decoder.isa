@@ -991,7 +991,7 @@ decode QUADRANT default Unknown::unknown() {
                         }}, EncOp);
                         0x3: dec({{
                             Rd = rvSext(Rs1_sd); // EECS 573
-                        }}, DecOp);
+                        }}, EncOp);
                     }
                     0x08: decode BS {
                         0x1: decode RVTYPE {
@@ -1275,6 +1275,9 @@ decode QUADRANT default Unknown::unknown() {
                     }}, IntDivOp);
                     0x2: enc_or({{
                         Rd = rvSext(Rs1 | Rs2);  // EECS 573
+                    }}, EncIntAluOp);
+                    0x3: enc_and({{
+                        Rd = rvSext(Rs1 & Rs2);  // EECS 573
                     }}, EncIntAluOp);
                     0x5: max({{
                         Rd_sd = std::max(rvSext(Rs1_sd), rvSext(Rs2_sd));
@@ -2046,6 +2049,14 @@ decode QUADRANT default Unknown::unknown() {
                     fd = freg(f16(Rs1_uh));
                     Fd_bits = fd.v;
                 }}, FloatCvtOp);
+            }
+            0x15: decode FUNCT2 {
+                0x0: enc_cmov({{
+                    Rd = FS3 ? FS2 : FS1; // EECS 573
+                }}, EncIntAluOp);
+                0x1: pir_read({{
+                    Rd_sd = Mem_sd;  // TODO 
+                }}, EncMemOp);  // EECS 573
             }
         }
 
