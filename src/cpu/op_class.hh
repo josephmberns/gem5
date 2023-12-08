@@ -56,7 +56,7 @@ using enums::No_OpClass;
 static const OpClass EncDecOp = enums::EncDec;
 static const OpClass EncIntAluOp = enums::EncIntAlu;
 static const OpClass EncIntMultOp = enums::EncIntMult;
-// static const OpClass EncMemOp = enums::EncMem;
+static const OpClass EncMemOp = enums::EncMem;
 static const OpClass IntAluOp = enums::IntAlu;
 static const OpClass IntMultOp = enums::IntMult;
 static const OpClass IntDivOp = enums::IntDiv;
