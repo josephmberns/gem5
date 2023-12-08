@@ -987,10 +987,10 @@ decode QUADRANT default Unknown::unknown() {
                             Rd = rvSext(Rs1_sd * Rs2_sd); // EECS 573
                         }}, EncIntMultOp);
                         0x2: enc({{
-                            Rd = rvSext(Rs1_sd); // EECS 573
+                            Rd = Rs1; // EECS 573
                         }}, EncDecOp);
                         0x3: dec({{
-                            Rd = rvSext(Rs1_sd); // EECS 573
+                            Rd = Rs1; // EECS 573
                         }}, EncDecOp);
                     }
                     0x08: decode BS {
@@ -2052,7 +2052,7 @@ decode QUADRANT default Unknown::unknown() {
             }
             0x15: decode FUNCT2 {
                 0x0: enc_cmov({{
-                    Rd = FS3 ? FS2 : FS1; // EECS 573
+                    Rd = Rs1 ? Rs2 : Rs3; // EECS 573
                 }}, EncIntAluOp);
             }
         }
