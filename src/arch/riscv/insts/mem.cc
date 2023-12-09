@@ -52,6 +52,16 @@ Load::generateDisassembly(Addr pc, const loader::SymbolTable *symtab) const
 }
 
 std::string
+LoadPIR::generateDisassembly(Addr pc, const loader::SymbolTable *symtab) const
+{
+    std::stringstream ss;
+    ss << mnemonic << ' ' << registerName(destRegIdx(0)) << ", " <<
+        offset << '(' << registerName(srcRegIdx(0)) << ')';
+    return ss.str();
+}
+
+
+std::string
 Store::generateDisassembly(Addr pc, const loader::SymbolTable *symtab) const
 {
     std::stringstream ss;
@@ -62,3 +72,5 @@ Store::generateDisassembly(Addr pc, const loader::SymbolTable *symtab) const
 
 } // namespace RiscvISA
 } // namespace gem5
+
+

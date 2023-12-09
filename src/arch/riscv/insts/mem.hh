@@ -62,6 +62,15 @@ class Load : public MemInst
         Addr pc, const loader::SymbolTable *symtab) const override;
 };
 
+class LoadPIR : public MemInst
+{
+  protected:
+    using MemInst::MemInst;
+
+    std::string generateDisassembly(
+        Addr pc, const loader::SymbolTable *symtab) const override;
+};
+
 class Store : public MemInst
 {
   protected:
