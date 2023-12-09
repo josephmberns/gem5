@@ -100,6 +100,7 @@ message Inst {
     EncDec = 34;  // EECS 573
     EncIntAlu = 35;
     EncIntMult = 36;
+    EncMem = 37;
   }
 
   optional InstType type = 6; // add, mul, fp add, load, store, simd add, …

@@ -46,6 +46,7 @@ class OpClass(Enum):
         "EncDec",
         "EncIntAlu",
         "EncIntMult",
+        "EncMem",
         "IntAlu",
         "IntMult",
         "IntDiv",
