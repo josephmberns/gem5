@@ -78,6 +78,22 @@ class EncIntMult(FUDesc):
         ]
     count = 1
 
+# Dummy functional unit for approx. PIR-read latencies
+# L2 Cache is 20 cycles, so let's use that as a baseline
+# If it's too high, we can try 0, even if we're not simulating with caches
+# MAX(DecLat - MemLat, 0) + Arr. Size - 1
+# We're assuming an avg. extra cycle per element
+MEM_LATENCY = 20
+MINSPAN = ENCRYPTION_LATENCY - MEM_LATENCY + 100 - 1
+BOYERMOORE = ENCRYPTION_LATENCY - MEM_LATENCY + 400 - 1
+KNAPSACK = ENCRYPTION_LATENCY - MEM_LATENCY + 251 - 1
+FLOODFILL = ENCRYPTION_LATENCY - MEM_LATENCY + 100 - 1
+class EncMem(FUDesc):
+    opList = [
+        OpDesc(opClass="EncMem", opLat=MINSPAN)
+        ]
+    count = 1
+
 # === Standard gem5 Units === #
 
 class IntALU(FUDesc):

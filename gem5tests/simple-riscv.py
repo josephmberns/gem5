@@ -65,8 +65,10 @@ binary = os.path.join(
     # "flood-fill-On2.enc",
     # "knapsack.encc",
     # "minspan.encc",
-    "knapsack.enc.rv",
+    # "knapsack.enc.rv",
     # "test.na",
+    # "minspan.enc.rvse",
+    "minspan.enc.rvpir",
 )
 
 system.workload = SEWorkload.init_compatible(binary)

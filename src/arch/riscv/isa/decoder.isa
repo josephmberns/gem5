@@ -2055,7 +2055,7 @@ decode QUADRANT default Unknown::unknown() {
                     Rd = Rs1 ? Rs2 : Rs3; // EECS 573
                 }}, EncIntAluOp);
                 0x1: pir_read({{
-                    Rd_sd = Mem_sd;  // TODO 
+                    Rd_sd = Mem_sd;
                 }}, EncMemOp);  // EECS 573
             }
         }
